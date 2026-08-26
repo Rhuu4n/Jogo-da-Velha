@@ -1,24 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
+import Tabuleiro from './components/Tabuleiro';
+import { useState } from 'react';
 
 function App() {
+    const [vez, setVez] = useState("X");
+    const [quadrados, setQuadrados] = useState([" ", " ", " ", " ", " ", " ", " ", " "]);
+
+    function Jogo(index){
+        if (vez == "X"){
+            setVez("O");
+        } else{
+            setVez("X");
+        }
+
+        index.target.style.pointerEvents = "none"
+
+        setQuadrados(anterior => {
+            const novo = [...anterior];
+            novo[index.target.id - 1] = vez;
+            return novo;
+        });
+    };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1 className='titulo'>Jogo da velha</h1>
+
+      <div className='container'>
+        <Tabuleiro vez = {vez} quadrados = {quadrados} Jogo= {Jogo}/>
+      </div>
+    </>
   );
 }
 
